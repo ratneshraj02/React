@@ -1,0 +1,440 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* =========================================================
+   Design tokens
+   ========================================================= */
+:root {
+  --bg: #070b14;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #e8edf7;
+  --text-muted: #93a0b8;
+  --accent-1: #7c5cff; /* violet */
+  --accent-2: #22d3ee; /* cyan   */
+  --accent-3: #f472b6; /* pink   */
+  --radius: 22px;
+  --shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.75);
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(0.22, 0.7, 0.25, 1);
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  /* Aurora glow */
+  background-image:
+    radial-gradient(ellipse 65% 55% at 12% -12%, rgba(124, 92, 255, 0.38), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 92% 8%, rgba(34, 211, 238, 0.2), transparent 55%),
+    radial-gradient(ellipse 50% 45% at 50% 112%, rgba(244, 114, 182, 0.16), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Faint dot-grid overlay for depth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse at 50% 35%, #000 25%, transparent 78%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: rgba(124, 92, 255, 0.45);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--bg);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+}
+
+#root :focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* =========================================================
+   Typography
+   ========================================================= */
+#root h1,
+#root h2,
+#root h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+#root p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   Page container
+   ========================================================= */
+#root > div {
+  width: min(1080px, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 8vw, 5.5rem) clamp(4rem, 9vw, 6.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* ---------- Hero heading ---------- */
+#root > div > h1:first-of-type {
+  font-size: clamp(2.5rem, 6.5vw, 4.25rem);
+  font-weight: 700;
+  background: linear-gradient(115deg, #ffffff 8%, var(--accent-2) 55%, var(--accent-1) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+#root > div > h1:first-of-type::after {
+  content: '';
+  display: block;
+  width: 104px;
+  height: 6px;
+  margin-top: 1.1rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  box-shadow: 0 0 26px rgba(124, 92, 255, 0.65);
+}
+
+/* ---------- Secondary heading (trailing rule) ---------- */
+#root > div > h1:last-of-type {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+}
+
+#root > div > h1:last-of-type::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.28), transparent);
+}
+
+/* =========================================================
+   Shell (reusable section)
+   ========================================================= */
+#root section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(155deg, var(--surface-strong), rgba(255, 255, 255, 0.02));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+}
+
+/* Soft violet orb inside the card */
+#root section::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -55%;
+  right: -18%;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.4), transparent 68%);
+  pointer-events: none;
+}
+
+/* Gradient hairline on top edge */
+#root section::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+  opacity: 0.85;
+}
+
+/* Eyebrow label: "Reusable Shell" */
+#root section > p:first-child {
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--accent-2);
+}
+
+#root section h2 {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 700;
+}
+
+/* Child heading inside the shell gets a quote-bar */
+#root section h1 {
+  margin-top: 0.4rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent-1);
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  font-weight: 600;
+}
+
+/* Child paragraph inside the shell */
+#root section > p:last-child {
+  max-width: 60ch;
+}
+
+/* =========================================================
+   Avatar cards grid
+   ========================================================= */
+#root sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+}
+
+#root article {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.85rem 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition:
+    transform 0.4s var(--ease),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    background-color 0.4s ease;
+}
+
+/* Animated gradient bar revealed on hover */
+#root article::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+
+/* Ambient glow on hover */
+#root article::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -60%;
+  right: -35%;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.32), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+#root article:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 92, 255, 0.5);
+  background: rgba(255, 255, 255, 0.065);
+  box-shadow: 0 26px 48px -22px rgba(124, 92, 255, 0.55);
+}
+
+#root article:hover::before {
+  transform: scaleX(1);
+}
+
+#root article:hover::after {
+  opacity: 1;
+}
+
+/* ---------- Avatar (initials) ---------- */
+#root article > div:first-child {
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  margin-bottom: 1.1rem;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+  box-shadow:
+    0 14px 28px -12px rgba(124, 92, 255, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: transform 0.4s var(--ease);
+}
+
+#root article:hover > div:first-child {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+/* ---------- Name ---------- */
+#root article h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* ---------- Role ---------- */
+#root article > p:first-of-type {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Level badge ---------- */
+#root article > p:last-child {
+  margin-top: 0.9rem;
+  padding: 0.32rem 0.8rem;
+  border: 1px solid rgba(34, 211, 238, 0.32);
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.1);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent-2);
+}
+
+/* =========================================================
+   Entrance animations (staggered)
+   ========================================================= */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+#root > div > *:not(sections) {
+  animation: riseIn 0.8s var(--ease) both;
+}
+
+#root > div > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+#root > div > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+#root > div > *:nth-child(3) {
+  animation-delay: 0.34s;
+}
+
+#root sections article {
+  animation: riseIn 0.75s var(--ease) both;
+}
+
+#root sections article:nth-child(1) {
+  animation-delay: 0.48s;
+}
+#root sections article:nth-child(2) {
+  animation-delay: 0.6s;
+}
+#root sections article:nth-child(3) {
+  animation-delay: 0.72s;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 640px) {
+  #root > div {
+    width: min(1080px, 100% - 2rem);
+  }
+
+  #root section::before {
+    width: 220px;
+    height: 220px;
+  }
+
+  #root article {
+    padding: 1.5rem 1.25rem;
+  }
+
+  #root > div > h1:first-of-type::after {
+    width: 72px;
+    height: 5px;
+  }
+}
+
+/* =========================================================
+   Reduced motion
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
