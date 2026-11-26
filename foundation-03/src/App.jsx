@@ -1,6 +1,6 @@
 import './App.css';
-import AvatarCard from './components/avatarCard';
-
+import AvatarCard from './components/avatarCard.jsx';
+import Card from './components/card.jsx';
 const avatars = [
 	{
 		id: 1,
@@ -53,7 +53,17 @@ function App() {
 					/>
 				))}
 			</sections>
+
+			{
+				<Card
+					title={'Title'}
+					subtitle={'Subtitle'}
+					content={'Content'}
+				/>
+			}
 		</div>
+
+		
 	);
 }
 

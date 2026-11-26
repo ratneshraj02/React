@@ -1,4 +1,5 @@
-function AvatarCard({ avatar, level ='Rookie' }) {
+
+function AvatarCard({ avatar, level = 'Rookie' }) {
 	return (
 		<article>
 			<div>{avatar.initials}</div>
