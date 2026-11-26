@@ -1,0 +1,19 @@
+.post-card { background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #e5e7eb; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; width: 100%; max-width: 350px; box-sizing: border-box; }
+
+.post-card:hover { transform: translateY(-6px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1); border-color: #818cf8; }
+
+.post-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+.post-badge { background: #eef2ff; color: #4f46e5; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+
+.user-badge { color: #6b7280; font-size: 12px; font-weight: 600; }
+
+.post-title { color: #111827; font-size: 19px; line-height: 1.5; margin: 0 0 12px; text-transform: capitalize; }
+
+.post-body { color: #6b7280; font-size: 14px; line-height: 1.8; margin-bottom: 22px; }
+
+.post-footer { border-top: 1px solid #f3f4f6; padding-top: 15px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; color: #9ca3af; }
+
+.read-more { color: #6366f1; cursor: pointer; transition: color 0.2s; }
+
+.read-more:hover { color: #4338ca; }
